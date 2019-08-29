@@ -12,9 +12,12 @@
         <button
             class="join-button"
             [disabled]="!isIDValid()"
+            (click)="onJoinClick()"
         >Join</button>
         <button
             class="create-button"
+            (click)="onCreateClick()"
+            disabled
         >New Game</button>
     </div>
 </div>

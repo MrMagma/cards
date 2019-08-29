@@ -24,6 +24,14 @@ export class MenuComponent implements OnInit {
         }
     }
 
+    onJoinClick() {
+
+    }
+
+    onCreateClick() {
+        console.log("Create");
+    }
+
     isIDValid() {
         return /^[A-F0-9]{6}$/.test(this.gameID);
     }
