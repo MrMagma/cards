@@ -15,8 +15,17 @@ export class MenuComponent implements OnInit {
 
     }
 
+    onIDInput(event) {
+        let nextID = event.target.value.toUpperCase();
+        if (/^[A-F0-9]*$/.test(nextID)) {
+            this.gameID = nextID;
+        } else {
+            event.target.value = this.gameID;
+        }
+    }
+
     isIDValid() {
-        return /^[a-fA-F0-9]{6}$/.test(this.gameID);
+        return /^[A-F0-9]{6}$/.test(this.gameID);
     }
 
     ngOnInit() {
