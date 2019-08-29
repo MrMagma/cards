@@ -1,4 +1,21 @@
-<div class="menu-column">
-    <input/>
-    <button>Play</button>
+<div class="menu-container">
+    <div class="menu">
+        <h1>Cards With Friends</h1>
+        <input
+            id="gid"
+            class="game-id-input"
+            maxlength=6
+            placeholder="Enter game ID"
+            spellcheck=false
+            [(ngModel)]="gameID"
+            (input)="onIDChange()"
+        />
+        <button
+            class="join-button"
+            [disabled]="!isIDValid()"
+        >Join</button>
+        <button
+            class="create-button"
+        >New Game</button>
+    </div>
 </div>
