@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-menu',
@@ -9,11 +9,10 @@ export class MenuComponent implements OnInit {
 
     gameID: string = "";
 
+    @Output() join: EventEmitter<any> = new EventEmitter();
+    @Output() create: EventEmitter<any> = new EventEmitter();
+
     constructor() { }
-
-    onIDChange() {
-
-    }
 
     onIDInput(event) {
         let nextID = event.target.value.toUpperCase();
@@ -25,11 +24,13 @@ export class MenuComponent implements OnInit {
     }
 
     onJoinClick() {
-
+        this.join.emit({
+            gameID: this.gameID
+        });
     }
 
     onCreateClick() {
-        console.log("Create");
+        this.create.emit();
     }
 
     isIDValid() {

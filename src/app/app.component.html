@@ -1,1 +1,6 @@
-<app-menu></app-menu>
+<div [hidden]="page != 'main'">
+    <app-menu (join)="onJoin($event)" (create)="onCreate()"></app-menu>
+</div>
+<div [hidden]="page != 'create'">
+    <app-create-game></app-create-game>
+</div>
