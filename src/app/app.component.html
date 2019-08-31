@@ -1,7 +1,18 @@
 <div class="background" [style.background]="getBackground()"></div>
-<div [hidden]="page != 'main'">
+<div
+    class="page-container"
+    [style.top]="page == 'create' ? '-100%' : '0%'"
+    [style.left]="page == 'game' ? '-100%' : '0%'"
+>
     <app-menu (join)="onJoin($event)" (create)="onCreate()"></app-menu>
 </div>
-<div [hidden]="page != 'create'">
+<div
+    class="page-container"
+    [style.top]="page == 'create' ? '0%' : '100%'"
+>
     <app-create-game (cancel)="onCancel()"></app-create-game>
 </div>
+<div
+    class="page-container"
+    [style.left]="page == 'game' ? '0%' : '100%'"
+></div>
