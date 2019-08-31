@@ -20,4 +20,7 @@ export class AppComponent {
     onCreate() {
         this.page = Page.Create;
     }
+    onCancel() {
+        this.page = Page.Main;
+    }
 }

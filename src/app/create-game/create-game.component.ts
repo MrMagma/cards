@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-create-game',
-  templateUrl: './create-game.component.html',
-  styleUrls: ['./create-game.component.sass']
+    selector: 'app-create-game',
+    templateUrl: './create-game.component.html',
+    styleUrls: ['./create-game.component.sass']
 })
 export class CreateGameComponent implements OnInit {
 
-  constructor() { }
+    @Output() cancel: EventEmitter<any> = new EventEmitter();
+    @Output() create: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit() {
-  }
+    name: string = "";
+    gameID: string = "";
+
+    games: Array<{name: string, id: string}> = [
+        {
+            name: "Blackjack",
+            id: "000000"
+        }
+    ];
+
+    constructor() { }
+
+    canCreate(): boolean {
+        return this.name.length > 0 && this.gameID.length > 0;
+    }
+
+    ngOnInit() {
+    }
 
 }

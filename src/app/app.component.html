@@ -2,5 +2,5 @@
     <app-menu (join)="onJoin($event)" (create)="onCreate()"></app-menu>
 </div>
 <div [hidden]="page != 'create'">
-    <app-create-game></app-create-game>
+    <app-create-game (cancel)="onCancel()"></app-create-game>
 </div>
