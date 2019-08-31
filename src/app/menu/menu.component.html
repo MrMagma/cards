@@ -1,21 +1,21 @@
 <div class="menu-container">
     <div class="menu">
-        <h1>Cards</h1>
+        <h1 class="menu-header">Cards</h1>
         <input
             id="gid"
-            class="game-id-input"
+            class="input game-id-input"
             maxlength=6
             placeholder="Enter game ID"
             spellcheck=false
             (input)="onIDInput($event)"
         />
         <button
-            class="join-button"
+            class="button green join-button"
             [disabled]="!isIDValid()"
             (click)="onJoinClick()"
         >Join</button>
         <button
-            class="create-button"
+            class="button blue create-button"
             (click)="onCreateClick()"
         >New Game</button>
     </div>

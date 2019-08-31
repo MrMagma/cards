@@ -6,6 +6,12 @@ enum Page {
     Create = "create"
 }
 
+const backgrounds = {
+    main: "#F44336",
+    game: "#4CAF50",
+    create: "#2196F3"
+}
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -22,5 +28,15 @@ export class AppComponent {
     }
     onCancel() {
         this.page = Page.Main;
+    }
+    getBackground() {
+        switch (this.page) {
+            case Page.Main:
+                return backgrounds.main
+            case Page.Create:
+                return backgrounds.create
+            case Page.Game:
+                return backgrounds.game
+        }
     }
 }

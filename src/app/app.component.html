@@ -1,3 +1,4 @@
+<div class="background" [style.background]="getBackground()"></div>
 <div [hidden]="page != 'main'">
     <app-menu (join)="onJoin($event)" (create)="onCreate()"></app-menu>
 </div>
