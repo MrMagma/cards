@@ -4,9 +4,9 @@
         <input class="input" [(ngModel)]="name" placeholder="Name" maxlength=16 spellcheck=false/>
         <select [(ngModel)]="gameID">
             <option value="" selected hidden>Game type</option>
-            <option *ngFor="let game of games" (value)="game.id">{{game.name}}</option>
+            <option *ngFor="let game of games" [(value)]="game.id">{{game.name}}</option>
         </select>
-        <button class="button blue create-game" (click)="create.emit()" [disabled]="!canCreate()">Create Game</button>
+        <button class="button blue create-game" (click)="onCreate()" [disabled]="!canCreate()">Create Game</button>
         <button class="button red cancel" (click)="cancel.emit()">Cancel</button>
     </div>
 </div>

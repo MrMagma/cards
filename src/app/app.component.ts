@@ -20,13 +20,51 @@ const backgrounds = {
 export class AppComponent {
     title = 'cards';
     page: Page = Page.Main;
-    onJoin(evt) {
-        console.log(evt);
+    positions = {
+        main: {
+            top: 0,
+            left: 0
+        },
+        game: {
+            top: 0,
+            left: 100
+        },
+        create: {
+            top: 100,
+            left: 0
+        }
     }
-    onCreate() {
+    onJoin({id}: {id: string}) {
+        /*
+        Join the room with id
+        */
+        this.positions.create.left = -100;
+        this.positions.main.left = -100;
+        this.positions.game.left = 0;
+        this.page = Page.Game;
+    }
+    onCreateMenu() {
+        this.positions.create.top = 0;
+        this.positions.main.top = -100;
         this.page = Page.Create;
     }
+    onCreate(event: {name: string, gameID: string}) {
+        /*
+        Create new room with name and game
+        Join the room that was just created
+        */
+        this.positions.create.left = -100;
+        this.positions.main.left = -100;
+        this.positions.game.left = 0;
+        setTimeout(() => {
+            this.positions.create.top = 100;
+            this.positions.main.top = 0;
+        }, 1000);
+        this.page = Page.Game;
+    }
     onCancel() {
+        this.positions.create.top = 100;
+        this.positions.main.top = 0;
         this.page = Page.Main;
     }
     getBackground() {
