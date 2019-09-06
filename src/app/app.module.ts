@@ -7,6 +7,9 @@ import { CardComponent } from './card/card.component';
 import { MenuComponent } from './menu/menu.component';
 import { GameComponent } from './game/game.component';
 import { CreateGameComponent } from './create-game/create-game.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { CreateGameComponent } from './create-game/create-game.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase, "cards-web"),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

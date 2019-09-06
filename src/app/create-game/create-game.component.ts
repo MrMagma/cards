@@ -1,4 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
+export interface GameType {name: string, gameID: string};
 
 @Component({
     selector: 'app-create-game',
@@ -13,14 +17,16 @@ export class CreateGameComponent implements OnInit {
     name: string = "";
     gameID: string = "";
 
-    games: Array<{name: string, id: string}> = [
-        {
-            name: "Blackjack",
-            id: "000000"
-        }
-    ];
+    private gameTypesCollection: AngularFirestoreCollection<GameType>
+    gameTypes: Observable<GameType[]>
 
-    constructor() { }
+    constructor(private afs: AngularFirestore) {
+        this.gameTypesCollection = afs.collection<GameType>("gametypes", ref => {
+            let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+            return query.orderBy("name");
+        });
+        this.gameTypes = this.gameTypesCollection.valueChanges();
+    }
 
     canCreate(): boolean {
         return this.name.length > 0 && this.gameID.length > 0;
