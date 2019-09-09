@@ -1,4 +1,5 @@
 import { Component, Output, OnInit, EventEmitter } from '@angular/core';
+import { SessionService } from '../session.service';
 
 @Component({
     selector: 'app-menu',
@@ -12,12 +13,13 @@ export class MenuComponent implements OnInit {
     @Output() join: EventEmitter<any> = new EventEmitter();
     @Output() create: EventEmitter<any> = new EventEmitter();
 
-    constructor() { }
+    constructor(private sessionService: SessionService) { }
 
     onIDInput(event) {
         let nextID = event.target.value.toUpperCase();
         if (/^[A-F0-9]*$/.test(nextID)) {
             this.gameID = nextID;
+            this.sessionService.setID(this.gameID);
         } else {
             event.target.value = this.gameID;
         }
@@ -34,7 +36,7 @@ export class MenuComponent implements OnInit {
     }
 
     isIDValid() {
-        return /^[A-F0-9]{6}$/.test(this.gameID);
+        return /^[A-F0-9]{6}$/.test(this.gameID) && this.sessionService.gameExists;
     }
 
     ngOnInit() {
