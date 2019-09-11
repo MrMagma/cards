@@ -17,4 +17,6 @@
     class="page-container"
     [style.left]="positions.game.left + '%'"
     [style.top]="positions.game.top + '%'"
-></div>
+>
+    <app-game (leave)="onLeave()"></app-game>
+</div>

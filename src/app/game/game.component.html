@@ -1,3 +1,8 @@
-<p>
-  game works!
-</p>
+<div class="game-container">
+    <h1 class="menu-header game-title">{{(gameData | async).name}}</h1>
+    <h2 class="game-id">{{(gameData | async).id}}</h2>
+    <button
+        class="button red leave-button"
+        (click)="onLeaveClick()"
+    >Leave</button>
+</div>

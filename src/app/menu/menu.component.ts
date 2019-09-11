@@ -29,6 +29,7 @@ export class MenuComponent implements OnInit {
         this.join.emit({
             gameID: this.gameID
         });
+        this.sessionService.joinGame();
     }
 
     onCreateClick() {
