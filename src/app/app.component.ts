@@ -77,12 +77,6 @@ export class AppComponent {
         }
         this.menuPage = page;
     }
-    onJoin({id}: {id: string}) {
-        /*
-        Join the room with id
-        */
-        this.setPage(MenuPage.Game);
-    }
     onLeave() {
         this.sessionService.leaveGame();
     }
