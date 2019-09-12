@@ -8,11 +8,12 @@
             placeholder="Enter game ID"
             spellcheck=false
             (input)="onIDInput($event)"
+            (keyup.enter)="onJoinEvent()"
         />
         <button
             class="button green join-button"
             [disabled]="!isIDValid()"
-            (click)="onJoinClick()"
+            (click)="onJoinEvent()"
         >Join</button>
         <button
             class="button blue create-button"

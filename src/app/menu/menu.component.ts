@@ -25,11 +25,13 @@ export class MenuComponent implements OnInit {
         }
     }
 
-    onJoinClick() {
-        this.join.emit({
-            gameID: this.gameID
-        });
-        this.sessionService.joinGame();
+    onJoinEvent() {
+        if (this.isIDValid()) {
+            this.join.emit({
+                gameID: this.gameID
+            });
+            this.sessionService.joinGame();
+        }
     }
 
     onCreateClick() {
