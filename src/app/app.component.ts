@@ -69,7 +69,6 @@ export class AppComponent {
                         this.positions.create.top = 100;
                         this.positions.main.top = 0;
                     }, 1000);
-                    this.menuPage = MenuPage.Game;
                 } else if (this.menuPage == MenuPage.Main) {
                     this.positions.create.left = -100;
                     this.positions.main.left = -100;
@@ -90,12 +89,16 @@ export class AppComponent {
     onCreateMenu() {
         this.setPage(MenuPage.Create);
     }
-    onCreate(event: {name: string, gameID: string}) {
-        /*
-        Create new room with name and game
-        Join the room that was just created
-        */
-        this.setPage(MenuPage.Game);
+    async onCreate(event: {name: string, gameID: string}) {
+        // TODO Start loading spinner here
+        await this.sessionService.createGame({
+            name: event.name,
+            game: event.gameID
+        }).then((id) => {
+            this.sessionService.joinGame();
+            this.setPage(MenuPage.Game);
+        });
+        // TODO Stop loading spinner here
     }
     onCancel() {
         this.setPage(MenuPage.Main);

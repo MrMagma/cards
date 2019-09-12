@@ -80,31 +80,29 @@ export class SessionService {
     public async joinGame() {
         if (SessionService.game.getValue() != null) await this.leaveGame();
         SessionService.game.next(this.afs.collection("games").doc(SessionService.gameID.getValue()).ref);
-        let players = [];
-        await SessionService.game.getValue().get().then(ref => {
-            players = ref.data().players;
+        let players = await SessionService.game.getValue().get().then(ref => {
+            return ref.data().players;
         });
         players.push(SessionService.player);
         await SessionService.game.getValue().set({
             players: players,
             playerIds: players.map(player => player.id)
-        }, { merge: true });
-        this.inGame.next(true);
+        }, { merge: true }).then(() => {
+            this.inGame.next(true);
+        });
     }
 
     public async leaveGame() {
         if (SessionService.game.getValue() != null) {
             let nextPlayers = [];
-            let data;
-            this.inGame.next(false);
-            await SessionService.game.getValue().get().then(ref => {
+            let data = await SessionService.game.getValue().get().then(ref => {
                 let currentPlayers = ref.data().players;
-                data = ref.data();
                 for (let player of currentPlayers) {
                     if (player.id != SessionService.player.id) {
                         nextPlayers.push(player);
                     }
                 }
+                return ref.data();
             });
             await SessionService.game.getValue().set({
                 id: data.id,
@@ -112,19 +110,16 @@ export class SessionService {
                 game: data.game,
                 players: nextPlayers,
                 playerIds: nextPlayers.map(player => player.id)
+            }).then(() => {
+                this.inGame.next(false);
             });
         }
     }
 
-    public async createGame(gameData: Game): Promise<string> {
-        let id: string;
-        let idAvailable: boolean = false;
-        do {
-            id = generateGameID();
-            await this.afs.collection("games").doc(id).get().toPromise().then(doc => {
-                idAvailable = doc.exists;
-            });
-        } while (!idAvailable);
+    public async createGame(gameData: {name: string, game: string}): Promise<string> {
+        let id: string = await this.afs.collection("games").ref.orderBy("id", "desc").limit(1).get().then((snapshot: QuerySnapshot<Game>) => {
+            return (parseInt(snapshot.docs[0].data().id, 16) + 1).toString(16).padStart(6, "0").toUpperCase();
+        });
         // TODO Create game in firestore, then join game
         await this.afs.collection("games").doc(id).set({
             id: id,
@@ -133,7 +128,6 @@ export class SessionService {
             players: []
         });
         this.setID(id);
-        this.joinGame();
         return id;
     }
 }
