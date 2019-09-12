@@ -1,6 +1,9 @@
 <div class="game-container">
     <h1 class="menu-header game-title">{{(gameData | async).name}}</h1>
     <h2 class="game-id">{{(gameData | async).id}}</h2>
+    <div class="game-table">
+
+    </div>
     <button
         class="button red leave-button"
         (click)="onLeaveClick()"
