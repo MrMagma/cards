@@ -78,7 +78,7 @@ export class SessionService {
     }
 
     public async joinGame() {
-        if (SessionService.game.getValue() != null) await this.leaveGame();
+        if (SessionService.game.getValue() != null && this.inGame.getValue()) await this.leaveGame();
         SessionService.game.next(this.afs.collection("games").doc(SessionService.gameID.getValue()).ref);
         let players = await SessionService.game.getValue().get().then(ref => {
             return ref.data().players;
@@ -117,8 +117,9 @@ export class SessionService {
     }
 
     public async createGame(gameData: {name: string, game: string}): Promise<string> {
+        const NEXT_ID_OFFSET: number = 15728681;
         let id: string = await this.afs.collection("games").ref.orderBy("id", "desc").limit(1).get().then((snapshot: QuerySnapshot<Game>) => {
-            return (parseInt(snapshot.docs[0].data().id, 16) + 1).toString(16).padStart(6, "0").toUpperCase();
+            return (parseInt(snapshot.docs[0].data().id, 16) + NEXT_ID_OFFSET).toString(16).padStart(6, "0").toUpperCase();
         });
         // TODO Create game in firestore, then join game
         await this.afs.collection("games").doc(id).set({

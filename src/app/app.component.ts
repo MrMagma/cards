@@ -37,6 +37,7 @@ export class AppComponent {
     }
     constructor(private sessionService: SessionService) {
         sessionService.inGame.subscribe((value: boolean) => {
+            console.log(value, this.menuPage);
             if (value) this.setPage(MenuPage.Game);
             else this.setPage(MenuPage.Main);
         });
