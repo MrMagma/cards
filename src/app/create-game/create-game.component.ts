@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { SessionService } from '../session.service';
 
 export interface GameType {name: string, gameID: string};
 
@@ -20,10 +21,16 @@ export class CreateGameComponent implements OnInit {
     private gameTypesCollection: AngularFirestoreCollection<GameType>
     gameTypes: Observable<GameType[]>
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private afs: AngularFirestore, private sessionService: SessionService) {
         this.gameTypesCollection = afs.collection<GameType>("gametypes", ref => {
             let query : firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
             return query.orderBy("name");
+        });
+        this.sessionService.inGame.subscribe((value: boolean) => {
+            if (!value) {
+                this.gameID = "";
+                this.name = "";
+            }
         });
         this.gameTypes = this.gameTypesCollection.valueChanges();
     }

@@ -8,6 +8,7 @@
             placeholder="Enter game ID"
             spellcheck=false
             (input)="onIDInput($event)"
+            [(ngModel)]="gameID"
             (keyup.enter)="onJoinEvent()"
         />
         <button

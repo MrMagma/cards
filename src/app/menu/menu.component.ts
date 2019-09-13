@@ -13,7 +13,11 @@ export class MenuComponent implements OnInit {
     @Output() join: EventEmitter<any> = new EventEmitter();
     @Output() create: EventEmitter<any> = new EventEmitter();
 
-    constructor(private sessionService: SessionService) { }
+    constructor(private sessionService: SessionService) {
+        this.sessionService.inGame.subscribe((value: boolean) => {
+            if (!value) this.gameID = "";
+        });
+    }
 
     onIDInput(event) {
         let nextID = event.target.value.toUpperCase();
