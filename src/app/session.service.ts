@@ -68,7 +68,6 @@ export class SessionService {
     }
 
     public setID(id: string) {
-        this.leaveGame();
         SessionService.gameID.next(id);
     }
 
@@ -117,18 +116,18 @@ export class SessionService {
     }
 
     public async createGame(gameData: {name: string, game: string}): Promise<string> {
-        const NEXT_ID_OFFSET: number = 15728681;
+        const NEXT_ID_OFFSET: number = 1;
         let id: string = await this.afs.collection("games").ref.orderBy("id", "desc").limit(1).get().then((snapshot: QuerySnapshot<Game>) => {
             return (parseInt(snapshot.docs[0].data().id, 16) + NEXT_ID_OFFSET).toString(16).padStart(6, "0").toUpperCase();
         });
-        // TODO Create game in firestore, then join game
+        console.log(id);
         await this.afs.collection("games").doc(id).set({
             id: id,
             name: gameData.name,
             game: gameData.game,
-            players: []
+            players: [],
+            playerIds: []
         });
-        this.setID(id);
         return id;
     }
 }

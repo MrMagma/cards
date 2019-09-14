@@ -85,10 +85,12 @@ export class AppComponent {
     }
     async onCreate(event: {name: string, gameID: string}) {
         // TODO Start loading spinner here
+        console.log(event);
         await this.sessionService.createGame({
             name: event.name,
             game: event.gameID
         }).then((id) => {
+            this.sessionService.setID(id);
             this.sessionService.joinGame();
             this.setPage(MenuPage.Game);
         });

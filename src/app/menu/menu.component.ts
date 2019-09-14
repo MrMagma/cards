@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
 
     constructor(private sessionService: SessionService) {
         this.sessionService.inGame.subscribe((value: boolean) => {
-            if (!value) this.gameID = "";
+            if (value) this.gameID = "";
         });
     }
 
